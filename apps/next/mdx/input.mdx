@@ -1,0 +1,37 @@
+---
+title: Input
+description: A rich Input component
+name: input
+component: Input
+package: input
+demoName: Input
+---
+
+<Header>Input</Header>
+
+<Description>A sizeable, themeable input.</Description>
+
+<DemoInput />
+
+<Header size={'$8'}>Code</Header>
+
+```tsx
+import { YStack } from 'tamagui'
+import { MnInput } from 'yourpath/ui'
+import { Eye, User2 } from '@tamagui/lucide-icons'
+
+const DemoInput = () => {
+  return (
+    <>
+      <YStack minHeight={250} overflow="hidden" gap="$4" margin="$3" padding="$2">
+        <MnInput />
+        <MnInput iconLeft={User2} />
+        <MnInput iconRight={Eye} roundedBorder />
+        <MnInput helperText="Tamagui is great" placeholder="Placeholder" />
+        <MnInput errorText="This is not correct" placeholder="Placeholder" error />
+        <MnInput roundedBorder />
+      </YStack>
+    </>
+  )
+}
+```

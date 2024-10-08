@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@my/config": "0.0.1",
+    "@tamagui/get-token": "^1.112.14",
     "@tamagui/toast": "^1.112.6",
     "tamagui": "^1.112.6"
   },

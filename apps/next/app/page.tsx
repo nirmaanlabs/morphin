@@ -1,5 +1,5 @@
 'use client'
 
-import { HomeScreen } from 'app/features/home/screen'
+import { Homescreen } from 'app/components/Homescreen'
 
-export default HomeScreen
+export default Homescreen

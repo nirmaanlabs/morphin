@@ -62,6 +62,7 @@ module.exports = function () {
       },
     },
     transpilePackages: [
+      'next-mdx-remote',
       'solito',
       'react-native-web',
       'expo-linking',
