@@ -130,8 +130,10 @@ export const MnInput = React.forwardRef((inProps: MnInputProps, forwardedRef) =>
             onBlur={composeEventHandlers(onBlur, () => {
               setIsFocused(false)
             })}
+            {...(iconLeft && { paddingLeft: 0 })}
+            {...(iconRight && { paddingRight: 0 })}
             height={'auto'}
-            {...(error && { placeholderTextColor: 'red' })}
+            {...(error && { placeholderTextColor: '0px' })}
             {...rest}
           />
         </XGroup.Item>

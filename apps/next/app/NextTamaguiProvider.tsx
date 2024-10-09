@@ -10,7 +10,7 @@ import { StyleSheet } from 'react-native'
 import { useServerInsertedHTML } from 'next/navigation'
 import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
 import { config } from '@my/ui'
-import { Provider } from 'app/provider'
+import { Provider } from './Provider'
 
 export const NextTamaguiProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useRootTheme()

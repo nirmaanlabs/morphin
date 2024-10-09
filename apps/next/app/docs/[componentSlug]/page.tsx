@@ -5,6 +5,7 @@ import { capitaliseFirstLetter } from 'app/utils/capitaliseFirstLetter'
 import { promises as fs } from 'fs'
 import Description from 'mdx/renderMdx/Description'
 import Header from 'mdx/renderMdx/Header'
+import PropsTable from 'mdx/renderMdx/PropsTable'
 import Pre from 'mdx/renderMdx/Pre'
 import { preProcess, postProcess, rehypePrism } from 'mdx/codeHighlight'
 import { compileMDX } from 'next-mdx-remote/rsc'
@@ -42,6 +43,7 @@ const Page = async ({ params }: IPageProps) => {
       Description,
       MnInput,
       DemoInput,
+      PropsTable,
       // Pre,
       //@ts-ignore
       pre: (props) => <Pre {...props} />,

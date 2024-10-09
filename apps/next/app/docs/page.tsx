@@ -1,12 +1,22 @@
-import React from 'react'
+'use client'
 
-export const metadata = {
-  title: 'Docs',
-  description: 'Documentation of all Morphin components',
-}
+import Header from 'mdx/renderMdx/Header'
+import Description from 'mdx/renderMdx/Description'
+import React from 'react'
+import { Stack, YStack } from '@my/ui'
 
 const DocsPage = () => {
-  return <div>Docs</div>
+  return (
+    <YStack>
+      <Header>Introduction</Header>
+      <Stack />
+      <Description>
+        Morphin is UI kit made using Tamagui. It's still in development phase.
+      </Description>
+
+      <Description>Feel free to use the code</Description>
+    </YStack>
+  )
 }
 
 export default DocsPage

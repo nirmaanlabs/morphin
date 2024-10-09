@@ -1,5 +1,5 @@
 import { getSpace } from '@tamagui/get-token'
-import { SizeTokens, Stack, styled, ThemeableStack } from 'tamagui'
+import { SizeTokens, styled, ThemeableStack } from 'tamagui'
 
 export const IconContainer = styled(ThemeableStack, {
   name: 'IconContainer',

@@ -10,8 +10,6 @@ export const preProcess = () => (tree: any) => {
 
       if (codeEl.tagName !== 'code') return
 
-      console.log(codeEl.children)
-
       node.raw = codeEl.children?.[0].value
     }
   })

@@ -10,8 +10,8 @@ const SidebarContainer = styled(YStack, {
 
 const Links = [
   {
-    href: '/docs/button',
-    name: 'Button',
+    href: '/docs',
+    name: 'Introduction',
   },
   {
     href: '/docs/input',
