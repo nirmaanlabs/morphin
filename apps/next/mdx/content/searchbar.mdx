@@ -1,3 +1,58 @@
+---
+title: Searchbar
+description: A searchinput to search text
+name: searchbar
+component: Searchbar
+package: searchbar
+demoName: searchbar
+---
+
+<Header>Searchbar</Header>
+
+<Description>
+  Simple input box where users can type search queries, made on top of MnInput
+</Description>
+
+<DemoSearchbar />
+
+<Header size={'$8'}>Code</Header>
+
+```tsx
+import { YStack } from 'tamagui'
+import { Searchbar } from 'yourpath/ui'
+import { useState } from 'react'
+
+const DemoSearchbar = () => {
+  const [query, setQuery] = useState('')
+
+  return (
+    <>
+      <YStack minHeight={250} overflow="hidden" gap="$4" margin="$3" padding="$2">
+        <Searchbar
+          value={query}
+          onChangeText={(text) => {
+            setQuery(text)
+          }}
+        />
+      </YStack>
+    </>
+  )
+}
+
+export default DemoSearchbar
+```
+
+<Header size={'$8'} paddingTop={'$8'}>
+  Props
+</Header>
+
+<PropsTable id="MnSearchbar" />
+
+<Header size={'$8'} paddingTop={'$8'}>
+  MnSearchbar Code
+</Header>
+
+````tsx
 import { MnInput, MnInputProps } from '../mn-input'
 import { Search, X } from '@tamagui/lucide-icons'
 import React, { useRef } from 'react'
@@ -81,3 +136,4 @@ Searchbar.defaultProps = {
   iconLeft: Search,
   iconRight: null,
 }
+````

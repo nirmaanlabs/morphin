@@ -8,23 +8,18 @@ const SidebarContainer = styled(YStack, {
   padding: '$4',
 })
 
-const Links = [
-  {
-    href: '/docs',
-    name: 'Introduction',
-  },
-  {
-    href: '/docs/input',
-    name: 'Input',
-  },
-]
+type TSidebarLinkConfig = {
+  href: string
+  name: string
+}
 
-export const Sidebar = () => {
+export const Sidebar = ({ links }: { links: TSidebarLinkConfig[] }) => {
+  console.log(links)
   return (
     <SidebarContainer elevation={2}>
       <Theme name={'orange_active'}>
         <YGroup size="$5" width={'100%'}>
-          {Links.map((e) => (
+          {links.map((e) => (
             <YGroup.Item key={e.href}>
               {/**TODO Fix the List Item Spacing */}
               <Link style={{ textDecoration: 'none' }} href={e.href}>

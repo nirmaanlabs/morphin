@@ -48,6 +48,31 @@ const config = [
       },
     ],
   },
+  {
+    name: 'MnSearchbar',
+    params: [
+      {
+        name: 'Prop Name',
+        type: 'Type',
+        description: 'Description',
+      },
+      {
+        name: 'value',
+        type: 'string (required)',
+        description: 'Show value in search bar',
+      },
+      {
+        name: 'onChangeText',
+        type: '(text: string) => void',
+        description: 'Function to update value in search bar',
+      },
+      {
+        name: 'extends',
+        type: 'MnInput',
+        description: 'It extends all the props the MnInput',
+      },
+    ],
+  },
 ]
 
 const PropsTable = ({ id }: { id: string }) => {

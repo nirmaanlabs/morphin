@@ -14,7 +14,7 @@ const Description = ({ children }: { children: ReactNode }) => {
         ls={-0.5}
         color={'$gray9'}
         mb={'$3'}
-        tag="p"
+        tag="h6"
         $sm={{
           size: '$6',
         }}

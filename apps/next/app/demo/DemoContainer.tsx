@@ -16,7 +16,13 @@ const Card2 = styled(YStack, {
   br: '$4',
 })
 
-const DemoContainer = ({ children }: { children: ReactNode }) => {
+const DemoContainer = ({
+  children,
+  limit = themeNames.length,
+}: {
+  children: ReactNode
+  limit?: number
+}) => {
   return (
     <XStack
       gap="$3"
@@ -29,7 +35,7 @@ const DemoContainer = ({ children }: { children: ReactNode }) => {
       justifyContent="flex-start"
       style={{ overflowX: 'scroll', width: '70vw' }}
     >
-      {themeNames.map((themeName: ThemeName) => {
+      {themeNames.slice(0, limit).map((themeName: ThemeName) => {
         return (
           <Theme key={themeName} name={themeName}>
             <Card2>{children}</Card2>

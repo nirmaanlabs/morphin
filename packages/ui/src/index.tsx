@@ -4,3 +4,4 @@ export { config } from '@my/config'
 
 // Morhpin UI
 export * from './mn-input'
+export * from './searchbar'
