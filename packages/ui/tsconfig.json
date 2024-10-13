@@ -2,6 +2,8 @@
   "extends": "../../tsconfig.base",
   "include": ["**/*.ts", "**/*.tsx", "../config/src/tamagui.config.ts"],
   "compilerOptions": {
+    // Test specific
+    // "types": ["@testing-library/jest-dom"],
     "composite": true,
     "jsx": "react-jsx"
   },

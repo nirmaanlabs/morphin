@@ -3,7 +3,8 @@
 import Header from 'mdx/renderMdx/Header'
 import Description from 'mdx/renderMdx/Description'
 import React from 'react'
-import { Stack, YStack } from '@my/ui'
+import { Button, Chip, Stack, Theme, XStack, YStack } from '@my/ui'
+import { X } from 'vitest/dist/chunks/reporters.WnPwkmgA'
 
 export const RenderPage = () => {
   return (

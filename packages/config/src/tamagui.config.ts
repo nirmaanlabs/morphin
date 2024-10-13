@@ -2,8 +2,8 @@ import { createTamagui } from 'tamagui'
 import { createInterFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
 import { tokens, themes } from '@tamagui/config/v3'
+import { customThemes } from './customTheme'
 import { createMedia } from '@tamagui/react-native-media-driver'
-
 import { animations } from '@my/ui/src/animations'
 
 const headingFont = createInterFont({
@@ -69,7 +69,11 @@ export const config = createTamagui({
   settings: {
     allowedStyleValues: 'somewhat-strict',
   },
-  themes,
+
+  themes: {
+    ...themes,
+    ...customThemes,
+  },
   tokens,
   media: createMedia({
     xs: { maxWidth: 660 },

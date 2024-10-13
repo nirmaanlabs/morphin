@@ -1,3 +1,94 @@
+---
+title: Chip
+description: A chip component
+name: chip
+component: Chip
+package: chip
+demoName: chip
+---
+
+<Header>Chip</Header>
+
+<Description>
+  Chips are compact elements that can represent inputs, attributes, or actions. They can have an
+  icon or avatar on the left, and a close button icon on the right. Chip is made using Tamagui
+  Button
+</Description>
+
+<DemoChip />
+
+<Header size={'$8'}>Code</Header>
+
+```tsx
+import { XStack, YStack } from 'tamagui'
+import { Chip } from 'yourpath/ui'
+import { Eye, X } from '@tamagui/lucide-icons'
+
+const DemoChip = () => {
+  return (
+    <>
+      <YStack minHeight={250} overflow="hidden" gap="$4" margin="$3" padding="$2">
+        <XStack gap={'$4'}>
+          <Chip>Normal</Chip>
+          <Chip icon={Eye}>Icon left</Chip>
+          <Chip iconAfter={X}>Icon right</Chip>
+        </XStack>
+        <XStack gap={'$4'}>
+          <Chip icon={Eye} iconAfter={X}>
+            Icons
+          </Chip>
+          <Chip variant="outlined">Outlined</Chip>
+          <Chip iconAfter={X} disabled>
+            Disabled
+          </Chip>
+        </XStack>
+        <XStack gap={'$4'}>
+          <Chip iconAfter={X} theme={'active'}>
+            Selected
+          </Chip>
+          <Chip iconAfter={X} pressTheme onPress={() => console.log('Do something')}>
+            Pressable
+          </Chip>
+        </XStack>
+      </YStack>
+    </>
+  )
+}
+
+export default DemoChip
+```
+
+<Note>
+  Note: You need to add Chip theme from <a href="#">here</a>. Inside Tamagui config add like below
+</Note>
+
+<Header size={'$8'}>Custom theme for Chip</Header>
+
+```tsx
+import { customThemes } from './customTheme'
+
+export const config = createTamagui({
+  // Your config ....
+  themes: {
+    ...themes,
+    ...customThemes, // This is how we add theme for Chip
+  },
+  tokens,
+  // more things ....
+})
+```
+
+<Header size={'$8'} paddingTop={'$8'}>
+  Props
+</Header>
+
+<PropsTable id="Chip" />
+
+<Header size={'$8'} paddingTop={'$8'}>
+  Chip Code
+</Header>
+
+```tsx
 import { getFontSize } from '@tamagui/font-size'
 import { withStaticProperties } from '@tamagui/helpers'
 import { useGetThemedIcon } from '@tamagui/helpers-tamagui'
@@ -199,8 +290,8 @@ const ChipIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
 
 const ChipComponent = ChipFrame.styleable<ChipExtraProps>(function Chip(props, ref) {
   // @ts-ignore
-  const { props: buttonProps } = useChip(props)
-  return <ChipFrame {...buttonProps} ref={ref} />
+  const { props: chipProps } = useChip(props)
+  return <ChipFrame {...chipProps} ref={ref} />
 })
 
 /**
@@ -208,7 +299,6 @@ const ChipComponent = ChipFrame.styleable<ChipExtraProps>(function Chip(props, r
  */
 const chipStaticConfig = {
   inlineProps: new Set([
-    // text props go here (can't really optimize them, but we never fully extract button anyway)
     // may be able to remove this entirely, as the compiler / runtime have gotten better
     'color',
     'fontWeight',
@@ -304,7 +394,6 @@ function useChip<Props extends ChipProps>(
       )
 
   const inner = spacedChildren({
-    // a bit arbitrary but scaling to font size is necessary so long as button does
     space: spaceSize,
     spaceFlex,
     ensureKeys: true,
@@ -328,7 +417,6 @@ function useChip<Props extends ChipProps>(
         borderColor: '$background',
       },
     }),
-    // fixes SSR issue + DOM nesting issue of not allowing button in button
     tag: tag ?? 'span',
     ...restProps,
 
@@ -354,3 +442,4 @@ export {
   useChip,
 }
 export type { ChipProps }
+```

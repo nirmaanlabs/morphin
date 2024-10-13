@@ -1,11 +1,12 @@
-import { MnInput } from 'app/ui/MnInput'
 import DemoInput from 'app/demo/DemoInput'
+import DemoChip from 'app/demo/DemoChip'
 import DemoSearchbar from 'app/demo/DemoSearchbar'
 import { IPageProps } from 'app/types'
 import { capitaliseFirstLetter } from 'app/utils/capitaliseFirstLetter'
 import Description from 'mdx/renderMdx/Description'
 import Header from 'mdx/renderMdx/Header'
 import PropsTable from 'mdx/renderMdx/PropsTable'
+import Note from 'mdx/renderMdx/Note'
 import Pre from 'mdx/renderMdx/Pre'
 import { preProcess, postProcess, rehypePrism } from 'mdx/codeHighlight'
 import { compileMDX } from 'next-mdx-remote/rsc'
@@ -42,10 +43,11 @@ const Page = async ({ params }: IPageProps) => {
     components: {
       Header,
       Description,
-      MnInput,
       DemoInput,
+      DemoChip,
       PropsTable,
       DemoSearchbar,
+      Note,
       // Pre,
       //@ts-ignore
       pre: (props) => <Pre {...props} />,

@@ -73,6 +73,22 @@ const config = [
       },
     ],
   },
+  {
+    name: 'Chip',
+    params: [
+      {
+        name: 'Prop Name',
+        type: 'Type',
+        description: 'Description',
+      },
+
+      {
+        name: 'extends',
+        type: 'Chip (ChipProps) = Button (ButtonProps)',
+        description: 'It extends all the props from Button',
+      },
+    ],
+  },
 ]
 
 const PropsTable = ({ id }: { id: string }) => {

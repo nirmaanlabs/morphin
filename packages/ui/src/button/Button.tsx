@@ -1,16 +1,11 @@
 import { getFontSize } from '@tamagui/font-size'
+import { getButtonSized } from '@tamagui/get-button-sized'
 import { withStaticProperties } from '@tamagui/helpers'
 import { useGetThemedIcon } from '@tamagui/helpers-tamagui'
-import { ButtonNestingContext as ChipNestingContext, ThemeableStack } from '@tamagui/stacks'
+import { ButtonNestingContext, ThemeableStack } from '@tamagui/stacks'
 import type { TextContextStyles, TextParentStyles } from '@tamagui/text'
 import { SizableText, wrapChildrenInText } from '@tamagui/text'
-import type {
-  FontSizeTokens,
-  GetProps,
-  SizeTokens,
-  ThemeableProps,
-  VariantSpreadExtras,
-} from '@tamagui/web'
+import type { FontSizeTokens, GetProps, SizeTokens, ThemeableProps } from '@tamagui/web'
 import {
   createStyledContext,
   getVariableValue,
@@ -21,35 +16,13 @@ import {
 import type { FunctionComponent } from 'react'
 import { useContext } from 'react'
 
-import { getSpace } from '@tamagui/get-token'
+type ButtonVariant = 'outlined'
 
-const getChipSized = (val: SizeTokens | number, { tokens, props }: VariantSpreadExtras<any>) => {
-  if (!val || props.circular) {
-    return
-  }
-  if (typeof val === 'number') {
-    return {
-      paddingHorizontal: val * 0.25 * 2.5,
-      borderRadius: props.circular ? 100_000 : val * 0.2 * 2,
-    }
-  }
-  const xSize = getSpace(val, {
-    shift: -1,
-  })
-  const radiusToken = tokens.radius[val] ?? tokens.radius['$true']
-  return {
-    paddingHorizontal: xSize,
-    borderRadius: props.circular ? 100_000 : radiusToken,
-  }
-}
-
-type ChipVariant = 'outlined'
-
-export const ChipContext = createStyledContext<
+export const ButtonContext = createStyledContext<
   Partial<
     TextContextStyles & {
       size: SizeTokens
-      variant?: ChipVariant
+      variant?: ButtonVariant
     }
   >
 >({
@@ -67,14 +40,14 @@ export const ChipContext = createStyledContext<
   variant: undefined,
 })
 
-type ChipIconProps = { color?: any; size?: any }
+type ButtonIconProps = { color?: any; size?: any }
 type IconProp =
   | JSX.Element
-  | FunctionComponent<ChipIconProps>
-  | ((props: ChipIconProps) => any)
+  | FunctionComponent<ButtonIconProps>
+  | ((props: ButtonIconProps) => any)
   | null
 
-type ChipExtraProps = TextParentStyles &
+type ButtonExtraProps = TextParentStyles &
   ThemeableProps & {
     /**
      * add icon before, passes color and size automatically if Component
@@ -102,17 +75,18 @@ type ChipExtraProps = TextParentStyles &
      * remove default styles
      */
     unstyled?: boolean
-
-    selected?: boolean
   }
 
-type ChipProps = ChipExtraProps & GetProps<typeof ChipFrame>
+type ButtonProps = ButtonExtraProps & GetProps<typeof ButtonFrame>
 
-const CHIP_NAME = 'Chip'
+const BUTTON_NAME = 'Button'
 
-const ChipFrame = styled(ThemeableStack, {
-  name: CHIP_NAME,
-  context: ChipContext,
+const ButtonFrame = styled(ThemeableStack, {
+  name: BUTTON_NAME,
+  tag: 'button',
+  context: ButtonContext,
+  role: 'button',
+  focusable: true,
 
   variants: {
     unstyled: {
@@ -122,14 +96,17 @@ const ChipFrame = styled(ThemeableStack, {
         alignItems: 'center',
         flexWrap: 'nowrap',
         flexDirection: 'row',
+        // cursor: 'pointer',
         hoverTheme: true,
+        pressTheme: true,
         backgrounded: true,
-        // Adds background color
-        borderWidth: 0.5,
+        borderWidth: 1,
         borderColor: 'transparent',
-        hoverStyle: {
-          backgroundColor: '$color6',
-          borderColor: '$color3',
+
+        focusVisibleStyle: {
+          outlineColor: '$outlineColor',
+          outlineStyle: 'solid',
+          outlineWidth: 2,
         },
       },
     },
@@ -137,24 +114,34 @@ const ChipFrame = styled(ThemeableStack, {
     variant: {
       outlined: {
         backgroundColor: 'transparent',
-        borderWidth: 1.5,
+        borderWidth: 2,
         borderColor: '$borderColor',
+
         hoverStyle: {
           backgroundColor: 'transparent',
-          borderColor: '$color6',
+          borderColor: '$borderColorHover',
+        },
+
+        pressStyle: {
+          backgroundColor: 'transparent',
+          borderColor: '$borderColorPress',
+        },
+
+        focusVisibleStyle: {
+          backgroundColor: 'transparent',
+          borderColor: '$borderColorFocus',
         },
       },
     },
 
     size: {
-      '...size': getChipSized,
-      ':number': getChipSized,
+      '...size': getButtonSized,
+      ':number': getButtonSized,
     },
 
     disabled: {
       true: {
         pointerEvents: 'none',
-        opacity: 0.5,
       },
     },
   } as const,
@@ -164,14 +151,15 @@ const ChipFrame = styled(ThemeableStack, {
   },
 })
 
-const ChipText = styled(SizableText, {
-  name: CHIP_NAME,
-  context: ChipContext,
+const ButtonText = styled(SizableText, {
+  name: 'Button',
+  context: ButtonContext,
 
   variants: {
     unstyled: {
       false: {
         userSelect: 'none',
+        cursor: 'pointer',
         // flexGrow 1 leads to inconsistent native style where text pushes to start of view
         flexGrow: 0,
         flexShrink: 1,
@@ -186,9 +174,9 @@ const ChipText = styled(SizableText, {
   },
 })
 
-const ChipIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
+const ButtonIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
   const { children, scaleIcon = 1 } = props
-  const { size, color } = useContext(ChipContext)
+  const { size, color } = useContext(ButtonContext)
 
   const iconSize =
     (typeof size === 'number' ? size * 0.5 : getFontSize(size as FontSizeTokens)) * scaleIcon
@@ -197,16 +185,16 @@ const ChipIcon = (props: { children: React.ReactNode; scaleIcon?: number }) => {
   return getThemedIcon(children)
 }
 
-const ChipComponent = ChipFrame.styleable<ChipExtraProps>(function Chip(props, ref) {
+const ButtonComponent = ButtonFrame.styleable<ButtonExtraProps>(function Button(props, ref) {
   // @ts-ignore
-  const { props: buttonProps } = useChip(props)
-  return <ChipFrame {...buttonProps} ref={ref} />
+  const { props: buttonProps } = useButton(props)
+  return <ButtonFrame {...buttonProps} ref={ref} />
 })
 
 /**
- * @deprecated Instead of useChip, see the Chip docs for the newer and much improved Advanced customization pattern: https://tamagui.dev/docs/components/button
+ * @deprecated Instead of useButton, see the Button docs for the newer and much improved Advanced customization pattern: https://tamagui.dev/docs/components/button
  */
-const chipStaticConfig = {
+const buttonStaticConfig = {
   inlineProps: new Set([
     // text props go here (can't really optimize them, but we never fully extract button anyway)
     // may be able to remove this entirely, as the compiler / runtime have gotten better
@@ -221,23 +209,23 @@ const chipStaticConfig = {
   ]),
 }
 
-const Chip = withStaticProperties(ChipComponent, {
-  Text: ChipText,
-  Icon: ChipIcon,
+const Button = withStaticProperties(ButtonComponent, {
+  Text: ButtonText,
+  Icon: ButtonIcon,
 })
 
 /**
- * @deprecated Instead of useChip, see the Chip docs for the newer and much improved Advanced customization pattern: https://tamagui.dev/docs/components/button
+ * @deprecated Instead of useButton, see the Button docs for the newer and much improved Advanced customization pattern: https://tamagui.dev/docs/components/button
  */
-function useChip<Props extends ChipProps>(
+function useButton<Props extends ButtonProps>(
   { textProps, ...propsIn }: Props,
-  { Text = Chip.Text }: { Text: any } = { Text: Chip.Text }
+  { Text = Button.Text }: { Text: any } = { Text: Button.Text }
 ) {
-  const isNested = useContext(ChipNestingContext)
+  const isNested = useContext(ButtonNestingContext)
   const propsActive = useProps(propsIn, {
     noNormalize: true,
     noExpand: true,
-  }) as any as ChipProps
+  }) as any as ButtonProps
 
   // careful not to destructure and re-order props, order is important
   const {
@@ -256,7 +244,6 @@ function useChip<Props extends ChipProps>(
     letterSpacing,
     tag,
     ellipse,
-
     maxFontSizeMultiplier,
 
     ...restProps
@@ -295,12 +282,15 @@ function useChip<Props extends ChipProps>(
           ellipse,
           maxFontSizeMultiplier,
         },
-        Text === ChipText && propsActive.unstyled !== true
+        Text === ButtonText && propsActive.unstyled !== true
           ? {
               unstyled: process.env.TAMAGUI_HEADLESS === '1',
               size,
+              cursor: propsIn.cursor || 'pointer',
             }
-          : undefined
+          : {
+              cursor: propsIn.cursor || 'pointer',
+            }
       )
 
   const inner = spacedChildren({
@@ -329,10 +319,19 @@ function useChip<Props extends ChipProps>(
       },
     }),
     // fixes SSR issue + DOM nesting issue of not allowing button in button
-    tag: tag ?? 'span',
+    tag:
+      tag ??
+      (isNested
+        ? 'span'
+        : // defaults to <a /> when accessibilityRole = link
+          // see https://github.com/tamagui/tamagui/issues/505
+          propsActive.accessibilityRole === 'link' || propsActive.role === 'link'
+          ? 'a'
+          : 'button'),
+
     ...restProps,
 
-    children: <ChipNestingContext.Provider value={true}>{inner}</ChipNestingContext.Provider>,
+    children: <ButtonNestingContext.Provider value={true}>{inner}</ButtonNestingContext.Provider>,
     // forces it to be a runtime pressStyle so it passes through context text colors
     disableClassName: true,
   } as Props
@@ -345,12 +344,12 @@ function useChip<Props extends ChipProps>(
 }
 
 export {
-  Chip,
-  ChipFrame,
-  ChipIcon,
-  chipStaticConfig,
-  ChipText,
+  Button,
+  ButtonFrame,
+  ButtonIcon,
+  ButtonText,
+  buttonStaticConfig,
   // legacy
-  useChip,
+  useButton,
 }
-export type { ChipProps }
+export type { ButtonProps }

@@ -44,6 +44,11 @@
     "npm": "10.8"
   },
   "devDependencies": {
-    "vitest": "^2.1.1"
+    "@testing-library/react-native": "^12.7.2",
+    "@types/react-test-renderer": "^18",
+    "@vitejs/plugin-react": "^4.3.2",
+    "react-test-renderer": "^18.3.1",
+    "vitest": "^2.1.1",
+    "vitest-react-native": "^0.1.5"
   }
 }
