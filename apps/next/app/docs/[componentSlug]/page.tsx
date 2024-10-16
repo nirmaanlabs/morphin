@@ -1,6 +1,7 @@
 import DemoInput from 'app/demo/DemoInput'
 import DemoChip from 'app/demo/DemoChip'
 import DemoSearchbar from 'app/demo/DemoSearchbar'
+import DemoButton from 'app/demo/DemoButton'
 import { IPageProps } from 'app/types'
 import { capitaliseFirstLetter } from 'app/utils/capitaliseFirstLetter'
 import Description from 'mdx/renderMdx/Description'
@@ -45,6 +46,7 @@ const Page = async ({ params }: IPageProps) => {
       Description,
       DemoInput,
       DemoChip,
+      DemoButton,
       PropsTable,
       DemoSearchbar,
       Note,

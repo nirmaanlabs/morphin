@@ -89,6 +89,41 @@ const config = [
       },
     ],
   },
+  {
+    name: 'MnButton',
+    params: [
+      {
+        name: 'Prop Name',
+        type: 'Type',
+        description: 'Description',
+      },
+      {
+        name: 'loading',
+        type: 'boolean',
+        description: 'Render a right (default) icon inside the button',
+      },
+      {
+        name: 'loadingIcon',
+        type: 'IconProps (default is spinner)',
+        description: 'Render a right (default) loading icon inside the button',
+      },
+      {
+        name: 'loadingIconAligment',
+        type: '"left" | "right"',
+        description: 'Render a right or left (default) loading icon inside the button',
+      },
+      {
+        name: 'circled',
+        type: 'boolean',
+        description: 'If true than renders circular button',
+      },
+      {
+        name: 'extends',
+        type: 'Button (ButtonProps) = MnButton (MnButtonProps)',
+        description: 'It extends all the props from Button',
+      },
+    ],
+  },
 ]
 
 const PropsTable = ({ id }: { id: string }) => {

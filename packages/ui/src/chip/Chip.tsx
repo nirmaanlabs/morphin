@@ -221,6 +221,29 @@ const chipStaticConfig = {
   ]),
 }
 
+/**
+ * Chip Component - A customizable chip (or tag) element with optional icons and text.
+ *
+ * - Use it to display short labels, tags, or categories with optional icons.
+ * - Can be styled with different sizes, variants, and other visual properties.
+ *
+ * Props:
+ * - `icon`: JSX element or function for rendering an icon before the text.
+ * - `iconAfter`: JSX element or function for rendering an icon after the text.
+ * - `scaleIcon`: Adjusts the size of the icon relative to the Chip size (default is 1).
+ * - `variant`: Customize the style, e.g., 'outlined'.
+ * - `size`: Adjusts the size of the Chip.
+ * - `selected`: Boolean, indicates if the chip is selected.
+ * - `disabled`: Boolean, disables interaction.
+ *
+ * Usage Example:
+ * ```jsx
+ * <Chip icon={<MyIcon />} variant="outlined" size="$3">
+ *   Label
+ * </Chip>
+ * ```
+ */
+
 const Chip = withStaticProperties(ChipComponent, {
   Text: ChipText,
   Icon: ChipIcon,
@@ -353,4 +376,5 @@ export {
   // legacy
   useChip,
 }
+
 export type { ChipProps }

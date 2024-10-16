@@ -1,10 +1,9 @@
 'use client'
 
-import Header from 'mdx/renderMdx/Header'
+import { Stack, YStack } from '@my/ui'
+import DemoButton from 'app/demo/DemoButton'
 import Description from 'mdx/renderMdx/Description'
-import React from 'react'
-import { Button, Chip, Stack, Theme, XStack, YStack } from '@my/ui'
-import { X } from 'vitest/dist/chunks/reporters.WnPwkmgA'
+import Header from 'mdx/renderMdx/Header'
 
 export const RenderPage = () => {
   return (
@@ -16,6 +15,8 @@ export const RenderPage = () => {
           Morphin is UI kit made using Tamagui. It's still in development phase.
         </Description>
         <Description>Feel free to use the code</Description>
+
+        <DemoButton />
       </YStack>
     </>
   )
