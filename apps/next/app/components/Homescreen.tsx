@@ -9,7 +9,6 @@ import {
   XStack,
   YStack,
 } from '@my/ui'
-import LoadingSpinner from 'app/docs/loading'
 
 import { Link } from 'solito/link'
 

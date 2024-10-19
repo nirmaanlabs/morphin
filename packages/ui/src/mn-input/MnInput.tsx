@@ -9,6 +9,7 @@ import {
   useComposedRefs,
   useGetThemedIcon,
   useProps,
+  useTheme,
   XGroup,
   YStack,
 } from 'tamagui'
@@ -129,7 +130,6 @@ export const MnInput = React.forwardRef((inProps: MnInputProps, forwardedRef) =>
   const [isFocused, setIsFocused] = useState(false)
   const ref = React.useRef<HTMLInputElement>(null)
   const composedRefs = useComposedRefs<any>(forwardedRef, ref)
-
   const size = inProps.size || '$true'
   const iconSize = getFontSize(size as any) * scaleIcon
   const getThemedIcon = useGetThemedIcon({ size: iconSize, color: color as any })

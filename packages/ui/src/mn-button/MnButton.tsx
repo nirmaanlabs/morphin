@@ -1,6 +1,6 @@
-import { SizeTokens, TokensParsed } from '@tamagui/web'
-import { FunctionComponent } from 'react'
-import { Button, ButtonProps, getTokens, Spinner } from 'tamagui'
+import { SizeTokens, TokensParsed } from '@tamagui/web';
+import { FunctionComponent } from 'react';
+import { Button, ButtonProps, getTokens, Spinner } from 'tamagui';
 
 type InputComponentIconProps = { color?: any; size?: any }
 type IconProp = JSX.Element | FunctionComponent<InputComponentIconProps> | null
@@ -9,10 +9,10 @@ export interface IMnButtonProps extends ButtonProps {
   loading?: boolean
   loadingIcon?: IconProp
   loadingIconAligment?: 'left' | 'right'
-  circled?: boolean
+  square?: boolean
 }
 
-export const getCircularButtonSize = (size, { tokens }) => {
+export const getSquareShapeSize = (size, { tokens }) => {
   const width = tokens.size[size] ?? size
   const height = tokens.size[size] ?? size
 
@@ -23,18 +23,24 @@ export const getCircularButtonSize = (size, { tokens }) => {
     maxWidth: width,
     maxHeight: height,
     minHeight: height,
-
-    // Other props related to making circular button
     padding: 0,
-    borderRadius: '50%',
   }
 }
 
-const getFinalSize = (
-  size: number | SizeTokens | undefined,
-  { tokens }: { tokens: TokensParsed }
-) => {
-  return getCircularButtonSize(size, {
+const getShapeSize = ({
+  size,
+  tokens,
+  shape,
+}: {
+  size: number | SizeTokens | undefined
+  tokens: TokensParsed
+  shape?: 'square'
+}) => {
+  if (!shape) {
+    return {}
+  }
+
+  return getSquareShapeSize(size, {
     tokens,
   })
 }
@@ -45,16 +51,23 @@ export const MnButton = (props: IMnButtonProps) => {
     loadingIcon = Spinner,
     loadingIconAligment,
     children,
-    circled = false,
+    square = false,
     ...rest
   } = props
 
+  const size = props.size || (props.unstyled ? undefined : '$true')
+
   const tokens = getTokens({ prefixed: true })
-  const finalSize = getFinalSize(props.size, { tokens })
+  const shapeSize = getShapeSize({
+    size,
+    tokens,
+    shape: square ? 'square' : undefined,
+  })
 
   return (
     // @ts-ignore
     <Button
+      size={size}
       {...rest}
       disabled={loading}
       {...(loading
@@ -62,7 +75,7 @@ export const MnButton = (props: IMnButtonProps) => {
           ? { left: Spinner, opacity: 0.5 }
           : { iconAfter: Spinner, opacity: 0.5 }
         : {})}
-      {...(circled && finalSize)}
+      {...(square && shapeSize)}
     >
       {children}
     </Button>

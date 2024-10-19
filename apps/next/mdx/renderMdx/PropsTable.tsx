@@ -113,9 +113,9 @@ const config = [
         description: 'Render a right or left (default) loading icon inside the button',
       },
       {
-        name: 'circled',
+        name: 'square',
         type: 'boolean',
-        description: 'If true than renders circular button',
+        description: 'If true than renders square button',
       },
       {
         name: 'extends',

@@ -10,7 +10,7 @@ demoName: button
 <Header>Button</Header>
 
 <Description>
-  Mn Button uses Tamagui button and add ablility to add loading state and shaped button (circular)
+  Mn Button uses Tamagui button and add ablility to add loading state and shaped button (square)
 </Description>
 
 <DemoButton />
@@ -18,19 +18,70 @@ demoName: button
 <Header size={'$8'}>Code</Header>
 
 ```tsx
-import { XStack, YStack } from 'tamagui'
+import { Separator, XStack, YStack } from 'tamagui'
 import { MnButton } from 'yourpath/ui'
 
 const DemoButton = () => {
   return (
     <>
-      <YStack minHeight={250} overflow="hidden" gap="$4" margin="$3" padding="$2">
+      <YStack
+        minHeight={250}
+        overflow="hidden"
+        margin="$3"
+        padding="$2"
+        justifyContent="space-between"
+      >
         <XStack gap={'$4'}>
           <MnButton loading>Loading</MnButton>
           <MnButton size={'$10'}>Normal Button</MnButton>
-          <MnButton size={'$10'} circled>
+          <MnButton size={'$10'} circular>
             A
           </MnButton>
+        </XStack>
+
+        <XStack gap={'$2'}>
+          <XStack gap={'$4'}>
+            <MnButton size={'$1'} circular>
+              A
+            </MnButton>
+            <MnButton size={'$2'} circular>
+              B
+            </MnButton>
+            <MnButton size={'$3'} circular>
+              C
+            </MnButton>
+
+            <MnButton size={'$4'} circular>
+              D
+            </MnButton>
+            <MnButton size={'$5'} circular>
+              E
+            </MnButton>
+            <MnButton size={'$6'} circular>
+              F
+            </MnButton>
+          </XStack>
+
+          <XStack gap={'$4'}>
+            <MnButton size={'$6'} square>
+              F
+            </MnButton>
+            <MnButton size={'$5'} square>
+              E
+            </MnButton>
+            <MnButton size={'$4'} square>
+              D
+            </MnButton>
+            <MnButton size={'$3'} square>
+              C
+            </MnButton>
+            <MnButton size={'$2'} square>
+              B
+            </MnButton>
+            <MnButton size={'$1'} square>
+              A
+            </MnButton>
+          </XStack>
         </XStack>
       </YStack>
     </>
@@ -51,7 +102,7 @@ export default DemoButton
 </Header>
 
 ```tsx
-import { SizeTokens, TokensParsed } from '@tamagui/web'
+import { SizeTokens, styled, TokensParsed } from '@tamagui/web'
 import { FunctionComponent } from 'react'
 import { Button, ButtonProps, getTokens, Spinner } from 'tamagui'
 
@@ -62,10 +113,10 @@ export interface IMnButtonProps extends ButtonProps {
   loading?: boolean
   loadingIcon?: IconProp
   loadingIconAligment?: 'left' | 'right'
-  circled?: boolean
+  square?: boolean
 }
 
-export const getCircularButtonSize = (size, { tokens }) => {
+export const getSquareShapeSize = (size, { tokens }) => {
   const width = tokens.size[size] ?? size
   const height = tokens.size[size] ?? size
 
@@ -76,18 +127,24 @@ export const getCircularButtonSize = (size, { tokens }) => {
     maxWidth: width,
     maxHeight: height,
     minHeight: height,
-
-    // Other props related to making circular button
     padding: 0,
-    borderRadius: '50%',
   }
 }
 
-const getFinalSize = (
-  size: number | SizeTokens | undefined,
-  { tokens }: { tokens: TokensParsed }
-) => {
-  return getCircularButtonSize(size, {
+const getShapeSize = ({
+  size,
+  tokens,
+  shape,
+}: {
+  size: number | SizeTokens | undefined
+  tokens: TokensParsed
+  shape?: 'square'
+}) => {
+  if (!shape) {
+    return {}
+  }
+
+  return getSquareShapeSize(size, {
     tokens,
   })
 }
@@ -98,16 +155,23 @@ export const MnButton = (props: IMnButtonProps) => {
     loadingIcon = Spinner,
     loadingIconAligment,
     children,
-    circled = false,
+    square = false,
     ...rest
   } = props
 
+  const size = props.size || (props.unstyled ? undefined : '$true')
+
   const tokens = getTokens({ prefixed: true })
-  const finalSize = getFinalSize(props.size, { tokens })
+  const shapeSize = getShapeSize({
+    size,
+    tokens,
+    shape: square ? 'square' : undefined,
+  })
 
   return (
     // @ts-ignore
     <Button
+      size={size}
       {...rest}
       disabled={loading}
       {...(loading
@@ -115,7 +179,7 @@ export const MnButton = (props: IMnButtonProps) => {
           ? { left: Spinner, opacity: 0.5 }
           : { iconAfter: Spinner, opacity: 0.5 }
         : {})}
-      {...(circled && finalSize)}
+      {...(square && shapeSize)}
     >
       {children}
     </Button>

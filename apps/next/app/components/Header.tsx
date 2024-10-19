@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, SizableText, styled, Text, ThemeableStack, XGroup, XStack, YStack } from '@my/ui'
+import { Button, SizableText, styled, ThemeableStack, XGroup, XStack, YStack } from '@my/ui'
 
 import { Github, Syringe } from '@tamagui/lucide-icons'
 import { Link } from 'solito/link'
@@ -55,8 +55,6 @@ export function Header() {
               <SizableText>Morphin</SizableText>
             </XGroup>
           </Link>
-
-          <Text>Hire Me !!!</Text>
 
           <XGroup>
             <Link href={'https://github.com/nirmaanlabs/morphin'} target="_blank">
