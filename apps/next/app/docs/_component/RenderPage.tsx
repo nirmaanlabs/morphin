@@ -12,8 +12,8 @@ export const RenderPage = () => {
         <Header>Introduction</Header>
         <Stack />
         <Description>
-          Morphin is UI kit made using Tamagui. It's still in development phase. Feel free to use
-          the code
+          Kickstart Your UI Projects with Ready-to-Use Components. Morphin is UI kit made using
+          Tamagui.
         </Description>
         <Header size={'$8'}>Demo</Header>
         <MainPageDemo />

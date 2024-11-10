@@ -9,11 +9,11 @@ import { ReactNode } from 'react'
 import { StyleSheet } from 'react-native'
 import { useServerInsertedHTML } from 'next/navigation'
 import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
-import { config } from '@my/ui'
+import { config, Theme } from '@my/ui'
 import { Provider } from './Provider'
 
 export const NextTamaguiProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useRootTheme()
+  const [theme, setTheme] = useRootTheme({ fallback: 'dark' })
 
   useServerInsertedHTML(() => {
     // @ts-ignore
@@ -60,7 +60,7 @@ export const NextTamaguiProvider = ({ children }: { children: ReactNode }) => {
     <NextThemeProvider
       skipNextHead
       // change default theme (system) here:
-      // defaultTheme="dark"
+      defaultTheme="light"
       onChangeTheme={(next) => {
         setTheme(next as any)
       }}

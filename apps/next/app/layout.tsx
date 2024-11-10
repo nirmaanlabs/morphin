@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { NextTamaguiProvider } from './NextTamaguiProvider'
 import { Header } from './components/Header'
+import { SidebarProvider, Theme } from '@my/ui'
+import { NextSidebarProvider } from './NextSidebarProvider'
 
 const description = 'Morphin are ready to copy and paste ui components made from Tamagui.'
 const siteName = 'Morphin Tamagui UI Kit'
@@ -40,8 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <NextTamaguiProvider>
-          <Header />
-          {children}
+          <NextSidebarProvider>
+            <Header />
+            {children}
+          </NextSidebarProvider>
         </NextTamaguiProvider>
       </body>
     </html>

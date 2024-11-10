@@ -9,7 +9,6 @@ import {
   useComposedRefs,
   useGetThemedIcon,
   useProps,
-  useTheme,
   XGroup,
   YStack,
 } from 'tamagui'

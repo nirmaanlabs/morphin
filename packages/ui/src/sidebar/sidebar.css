@@ -1,0 +1,33 @@
+.group[data-collapsible="icon"] .group-data-\[collapsible\=icon\]\:opacity-0 {
+  opacity: 0;
+}
+
+.group[data-collapsible="icon"] .group-data-\[collapsible\=icon\]\:hidden {
+  display: none;
+}
+
+.group[data-collapsible="icon"] .sidebar-group-label {
+  margin: -0.5rem;
+}
+
+.group[data-collapsible="icon"] .sidebar-content-overflow-hidden {
+  overflow: hidden;
+}
+
+
+.group[data-collapsible="icon"] .collapsible-icon-pl-4 {
+  padding-left: 4.5px;
+}
+
+.group[data-collapsible="icon"] .collapsible-icon-pl-0 {
+  padding-left: 0px;
+}
+
+
+.group[data-collapsible="icon"] .collapsible-icon-pl-0 {
+  padding-left: 0px;
+}
+
+.group\/collapsible[data-state="open"] .rotate-90deg {
+  rotate: 90deg;
+}

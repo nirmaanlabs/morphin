@@ -2,21 +2,11 @@ import { Separator, styled, Text, View, XStack, YStack } from '@my/ui'
 import { ChevronRight } from '@tamagui/lucide-icons'
 import { Link } from 'expo-router'
 import { Pressable } from 'react-native'
+import { Links } from './links'
 
 const SidebarContainer = styled(YStack, {
   padding: '$4',
 })
-
-const Links = [
-  {
-    href: '/docs/[id]',
-    name: 'Button',
-  },
-  {
-    href: '/docs/[id]',
-    name: 'Input',
-  },
-]
 
 export const NavToComponentList = () => {
   return (

@@ -62,7 +62,7 @@ const MainPageDemo = () => {
           <XStack gap={'$4'}>
             <MnInput placeholder="Name" placeholderTextColor={'$gray8'} />
             <MnInput iconLeft={User2} />
-            <MnInput errorText="password must be altest 8 character" error />
+            <MnInput errorText="password must be atleast 8 character" error />
           </XStack>
 
           <XStack gap={'$4'} flexWrap="wrap">
