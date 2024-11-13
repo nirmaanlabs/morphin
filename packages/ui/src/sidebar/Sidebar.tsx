@@ -11,7 +11,16 @@ import {
   useTheme,
 } from '@tamagui/web'
 import * as React from 'react'
-import { Button, SizableText, ThemeableStack, YStack, Text } from 'tamagui'
+import {
+  Button,
+  SizableText,
+  ThemeableStack,
+  YStack,
+  Text,
+  TooltipProps,
+  Tooltip,
+  ThemeableStackProps,
+} from 'tamagui'
 import './sidebar.css'
 import { getSize, getSpace } from '@tamagui/get-token'
 
@@ -328,6 +337,7 @@ const SidebarGroupFrame = styled(YStack, {
   position: 'relative',
   transition: 'padding 0.3s ease',
   padding: '0.5rem',
+  //@ts-ignore
   overflowX: 'hidden',
 })
 
@@ -521,21 +531,41 @@ const SidebarMenuButtonFrame = styled(SidebarButtonBase, {
   },
 })
 
-/***
- * Tooltip support add
- *
- */
+type SidebarMenuButtonProps = ThemeableStackProps & {
+  tooltipProps?: TooltipProps & { title?: string }
+}
 
-const SidebarMenuButtonC = SidebarMenuButtonFrame.styleable((props, forwardedRef) => {
-  return (
-    <SidebarMenuButtonFrame
-      ref={forwardedRef}
-      data-sidebar="menu-button"
-      className={`${props.className} sidebar-menu-btn`}
-      {...props}
-    />
-  )
-})
+const SidebarMenuButtonC = SidebarMenuButtonFrame.styleable<SidebarMenuButtonProps>(
+  (props, forwardedRef) => {
+    if (props.tooltipProps) {
+      return (
+        <Tooltip {...props.tooltipProps}>
+          <Tooltip.Trigger>
+            <SidebarMenuButtonFrame
+              ref={forwardedRef}
+              data-sidebar="menu-button"
+              className={`${props.className} sidebar-menu-btn`}
+              {...props}
+            />
+          </Tooltip.Trigger>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            <SizableText>{props.tooltipProps.title}</SizableText>
+          </Tooltip.Content>
+        </Tooltip>
+      )
+    }
+
+    return (
+      <SidebarMenuButtonFrame
+        ref={forwardedRef}
+        data-sidebar="menu-button"
+        className={`${props.className} sidebar-menu-btn`}
+        {...props}
+      />
+    )
+  }
+)
 
 export const SidebarMenuButtonText = styled(Text, {
   name: 'ButtonText',
@@ -553,8 +583,6 @@ export const SidebarMenuButtonText = styled(Text, {
     },
   } as const,
 })
-
-type IconsProps = React.NamedExoticComponent<TamaIconProps>
 
 const SidebarMenuButtonIcon = (props: { children: any; className?: string }) => {
   const { size = '$true' } = React.useContext(SidebarContext)

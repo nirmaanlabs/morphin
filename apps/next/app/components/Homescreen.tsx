@@ -33,11 +33,9 @@ export function Homescreen() {
           </BorderedContainer>
           <Spacer direction="horizontal" size={'$12'}></Spacer>
           <XStack>
-            <Theme name="dark">
-              <Link href={'/docs'}>
-                <Button>Get Started</Button>
-              </Link>
-            </Theme>
+            <Link href={'/docs'}>
+              <Button>Get Started</Button>
+            </Link>
           </XStack>
         </YStack>
       </PageContainer>

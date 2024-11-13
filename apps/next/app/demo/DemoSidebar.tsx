@@ -12,7 +12,6 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSubMenu,
@@ -23,22 +22,16 @@ import {
   YStack,
 } from '@my/ui'
 import {
-  Briefcase,
+  Bot,
   Building2,
-  CheckSquare,
-  ChevronDown,
+  ChevronRight,
   FolderLock,
   Key,
   Lock,
   Shield,
   ShieldCheck,
-  UserCheck,
-  Vault,
   TerminalSquare,
-  Bot,
-  BookOpen,
-  Settings2,
-  ChevronRight,
+  Vault,
 } from '@tamagui/lucide-icons'
 import DemoContainer from './DemoContainer'
 
@@ -146,6 +139,14 @@ const DemoSidebar = () => {
                     <SidebarMenuButton
                       className="collapsible-icon-pl-4"
                       transition="padding-left 0.3s ease"
+                      tooltipProps={{
+                        title: 'Armac LLC',
+                        placement: 'right-start',
+                        delay: {
+                          open: 0,
+                          close: 0.5,
+                        },
+                      }}
                     >
                       <XStack padding="$1" bg={'$purple7'} borderRadius={'$1'}>
                         <SidebarMenuButton.Icon>
@@ -180,7 +181,16 @@ const DemoSidebar = () => {
                         >
                           <SidebarMenuItem>
                             <CollapsibleTrigger asChild transition="height 3s ease">
-                              <SidebarMenuButton>
+                              <SidebarMenuButton
+                                tooltipProps={{
+                                  title: `${item.title}`,
+                                  placement: 'right-start',
+                                  delay: {
+                                    open: 0,
+                                    close: 0.5,
+                                  },
+                                }}
+                              >
                                 {item.icon && (
                                   <SidebarMenuButton.Icon>
                                     <item.icon flexShrink={0} />
