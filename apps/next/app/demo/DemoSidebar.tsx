@@ -6,6 +6,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  Label,
+  RadioGroup,
   Separator,
   Sidebar,
   SidebarGroup,
@@ -18,6 +20,7 @@ import {
   SidebarSubMenuButton,
   SidebarSubMenuItem,
   SizableText,
+  SizeTokens,
   XStack,
   YStack,
 } from '@my/ui'
@@ -33,6 +36,7 @@ import {
   TerminalSquare,
   Vault,
 } from '@tamagui/lucide-icons'
+import { useState } from 'react'
 import DemoContainer from './DemoContainer'
 
 const navMain = [
@@ -117,7 +121,24 @@ const items = [
   },
 ]
 
+export function RadioGroupItemWithLabel(props: { size: SizeTokens; value: string; label: string }) {
+  const id = `radiogroup-${props.value}`
+  return (
+    <XStack width={300} alignItems="center" space="$4">
+      <RadioGroup.Item value={props.value} id={id} size={props.size}>
+        <RadioGroup.Indicator />
+      </RadioGroup.Item>
+
+      <Label size={props.size} htmlFor={id}>
+        {props.label}
+      </Label>
+    </XStack>
+  )
+}
+
 const DemoSidebar = () => {
+  const [collapsibleVal, setCollapsibleVal] = useState<'icon' | 'offcanvas' | 'none'>('icon')
+
   return (
     <>
       <DemoContainer limit={1}>
@@ -128,11 +149,10 @@ const DemoSidebar = () => {
           padding="$2"
           justifyContent="space-between"
         >
-          <Sidebar.Trigger asChild>
-            <Button>Toggle Sidebar</Button>
-          </Sidebar.Trigger>
+          <XStack></XStack>
+
           <XStack gap={'$4'}>
-            <Sidebar collapsible="icon">
+            <Sidebar collapsible={collapsibleVal} borderColor={'aliceblue'} borderStyle="solid">
               <Sidebar.Header>
                 <SidebarMenu>
                   <SidebarMenuItem>
@@ -278,6 +298,51 @@ const DemoSidebar = () => {
                 </SidebarMenuButton>
               </Sidebar.Footer>
             </Sidebar>
+            <YStack>
+              <Sidebar.Trigger asChild>
+                <Button>Toggle Sidebar</Button>
+              </Sidebar.Trigger>
+              <YStack>
+                <Separator marginVertical={15} />
+                <SizableText>Collapsible Type</SizableText>
+                <RadioGroup
+                  onValueChange={(v) => {
+                    // @ts-ignore
+                    setCollapsibleVal(v)
+                  }}
+                  gap="$2"
+                  name="form"
+                  value={collapsibleVal}
+                >
+                  <YStack>
+                    <XStack width={300} alignItems="center" space="$4">
+                      <RadioGroup.Item value="icon" id="icon-radio-item">
+                        <RadioGroup.Indicator />
+                      </RadioGroup.Item>
+                      <Label size={3} htmlFor={'icon-radio-item'}>
+                        Icon
+                      </Label>
+                    </XStack>
+                    <XStack width={300} alignItems="center" space="$4">
+                      <RadioGroup.Item value="offcanvas" id="offcanvas-radio-item">
+                        <RadioGroup.Indicator />
+                      </RadioGroup.Item>
+                      <Label size={3} htmlFor={'offcanvas-radio-item'}>
+                        Offcanvas
+                      </Label>
+                    </XStack>
+                    <XStack width={300} alignItems="center" space="$4">
+                      <RadioGroup.Item value="none" id="none-radio-item">
+                        <RadioGroup.Indicator />
+                      </RadioGroup.Item>
+                      <Label size={3} htmlFor={'none-radio-item'}>
+                        None
+                      </Label>
+                    </XStack>
+                  </YStack>
+                </RadioGroup>
+              </YStack>
+            </YStack>
           </XStack>
         </YStack>
       </DemoContainer>

@@ -1,5 +1,5 @@
+import { getSize, getSpace } from '@tamagui/get-token'
 import { composeEventHandlers, withStaticProperties } from '@tamagui/helpers'
-import type { IconProps as TamaIconProps } from '@tamagui/helpers-icon'
 import {
   GetProps,
   SizeTokens,
@@ -14,15 +14,14 @@ import * as React from 'react'
 import {
   Button,
   SizableText,
-  ThemeableStack,
-  YStack,
   Text,
-  TooltipProps,
-  Tooltip,
+  ThemeableStack,
   ThemeableStackProps,
+  Tooltip,
+  TooltipProps,
+  YStack,
 } from 'tamagui'
 import './sidebar.css'
-import { getSize, getSpace } from '@tamagui/get-token'
 
 /**
  * when size is undefined or not explicitly passed by user
@@ -124,14 +123,34 @@ const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
 }
 
 const _Sidebar = React.forwardRef<Stack, ScopedProps<SidebarProps>>((props, forwardedRef) => {
-  const { __scopeSidebar, collapsible, ...sidebarProps } = props
+  const { __scopeSidebar, collapsible = 'icon', ...sidebarProps } = props
   const { useStyledContext: useSidebarContext } = SidebarContext
 
   const { open, state } = useSidebarContext() // Get open state and toggle function from context
 
-  const width = open ? SIDEBAR_WIDTH : SIDEBAR_WIDTH_ICON
+  const width = open ? SIDEBAR_WIDTH : collapsible === 'offcanvas' ? 0 : SIDEBAR_WIDTH_ICON
+
+  if (collapsible === 'none') {
+    return (
+      <Stack
+        {...sidebarProps}
+        ref={forwardedRef}
+        className="sidebar group peer"
+        // This is necessary to maintain constant container height
+        maxHeight={'70svh'}
+        minHeight={'70svh'}
+        style={{
+          // @ts-ignore
+          '--sidebar-width': SIDEBAR_WIDTH,
+          width: 'var(--sidebar-width)',
+        }}
+      />
+    )
+  }
 
   // Apply keyboard shortcut for toggle
+
+  console.log({ width })
 
   return (
     <Stack
@@ -139,21 +158,17 @@ const _Sidebar = React.forwardRef<Stack, ScopedProps<SidebarProps>>((props, forw
       data-disabled={false}
       data-collapsible={state === 'collapsed' ? collapsible : ''}
       width={width}
-      {...sidebarProps}
       ref={forwardedRef}
-      className="sidebar group peer"
+      className="sidebar group peer w-0"
       $sm={{
         display: 'none',
       }}
       // This is necessary to maintain constant container height
       maxHeight={'70svh'}
       minHeight={'70svh'}
-      style={{
-        overflow: 'hidden',
-        transition: 'width 0.3s ease',
-        borderStyle: 'solid',
-        borderColor: '$color.gray2Light',
-      }}
+      overflow="hidden"
+      transition="width 0.3s ease"
+      {...sidebarProps}
     />
   )
 })
@@ -431,10 +446,19 @@ const SIDEBAR_MENU = 'SidebarMenu'
 const SidebarMenuFrame = styled(YStack, {
   name: SIDEBAR_MENU,
   tag: 'ul',
+  style: {
+    listStyle: 'none',
+  },
+  //@ts-ignore
 })
 
 const SidebarMenu = SidebarMenuFrame.styleable((props, forwardedRef) => (
-  <SidebarMenuFrame ref={forwardedRef} data-sidebar="menu" {...props} />
+  <SidebarMenuFrame
+    ref={forwardedRef}
+    data-sidebar="menu"
+    // style={{ listStyle: 'none' }}
+    {...props}
+  />
 ))
 SidebarMenu.displayName = 'SidebarMenu'
 
@@ -537,20 +561,23 @@ type SidebarMenuButtonProps = ThemeableStackProps & {
 
 const SidebarMenuButtonC = SidebarMenuButtonFrame.styleable<SidebarMenuButtonProps>(
   (props, forwardedRef) => {
-    if (props.tooltipProps) {
+    const { tooltipProps, className, ...restProps } = props
+
+    if (tooltipProps) {
+      const { title, ...restTooltipProps } = tooltipProps
       return (
-        <Tooltip {...props.tooltipProps}>
+        <Tooltip {...restTooltipProps}>
           <Tooltip.Trigger>
             <SidebarMenuButtonFrame
               ref={forwardedRef}
               data-sidebar="menu-button"
-              className={`${props.className} sidebar-menu-btn`}
-              {...props}
+              className={`${className} sidebar-menu-btn`}
+              {...restProps}
             />
           </Tooltip.Trigger>
           <Tooltip.Content>
             <Tooltip.Arrow />
-            <SizableText>{props.tooltipProps.title}</SizableText>
+            <SizableText>{title}</SizableText>
           </Tooltip.Content>
         </Tooltip>
       )
@@ -708,18 +735,18 @@ export {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupAction,
+  SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarProvider,
-  SidebarTrigger,
-  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuAction,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
   SidebarSubMenu,
-  SidebarSubMenuItem,
   SidebarSubMenuButton,
+  SidebarSubMenuItem,
+  SidebarTrigger,
 }
 
 export type {
