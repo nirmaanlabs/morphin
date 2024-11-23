@@ -1,11 +1,16 @@
 .buttonClasses {
   position: absolute;
   background-color: rgb(241, 243, 242);
-  top:0
-  
+  top: 0
 }
 
-.custom-pre{
+.custom-pre {
   position: relative;
   display: block;
+}
+
+.scrollable-height {
+  max-height: 85vh;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }

@@ -18,7 +18,7 @@ export default function Pre({
   className: string
 }) {
   return (
-    <pre {...props} className={`custom-pre ${className}`}>
+    <pre {...props} className={`custom-pre scrollable-height ${className}`}>
       {children}
       <CopyButton text={raw} className="buttonClasses" />
     </pre>

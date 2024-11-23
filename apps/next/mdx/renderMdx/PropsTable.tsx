@@ -124,6 +124,22 @@ const config = [
       },
     ],
   },
+  {
+    name: 'Sidebar',
+    params: [
+      {
+        name: 'Prop Name',
+        type: 'Type',
+        description: 'Description',
+      },
+      {
+        name: 'collapsible',
+        type: "'offcanvas' | 'icon' | 'none'",
+        description:
+          'Render a sidebar, when none then it is non-collapsible, otherwise full collapsible (width 0) and width equal to icon size  ',
+      },
+    ],
+  },
 ]
 
 const PropsTable = ({ id }: { id: string }) => {
