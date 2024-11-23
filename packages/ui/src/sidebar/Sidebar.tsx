@@ -56,7 +56,7 @@ const getButtonSized = (val: SizeTokens | number, { tokens, props }: VariantSpre
 
 const SIDEBAR_NAME = 'Sidebar'
 const SIDEBAR_WIDTH = '16rem'
-const SIDEBAR_WIDTH_MOBILE = '18rem'
+// const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
@@ -133,24 +133,17 @@ const _Sidebar = React.forwardRef<Stack, ScopedProps<SidebarProps>>((props, forw
   if (collapsible === 'none') {
     return (
       <Stack
-        {...sidebarProps}
         ref={forwardedRef}
         className="sidebar group peer"
-        // This is necessary to maintain constant container height
-        maxHeight={'70svh'}
-        minHeight={'70svh'}
         style={{
           // @ts-ignore
           '--sidebar-width': SIDEBAR_WIDTH,
           width: 'var(--sidebar-width)',
         }}
+        {...sidebarProps}
       />
     )
   }
-
-  // Apply keyboard shortcut for toggle
-
-  console.log({ width })
 
   return (
     <Stack
@@ -163,9 +156,6 @@ const _Sidebar = React.forwardRef<Stack, ScopedProps<SidebarProps>>((props, forw
       $sm={{
         display: 'none',
       }}
-      // This is necessary to maintain constant container height
-      maxHeight={'70svh'}
-      minHeight={'70svh'}
       overflow="hidden"
       transition="width 0.3s ease"
       {...sidebarProps}
@@ -201,9 +191,9 @@ const SidebarTrigger = SidebarTriggerFrame.styleable(
         data-state={getState(context.open)}
         data-disabled={context.disabled ? '' : undefined}
         disabled={context.disabled}
-        {...(triggerProps as any)}
         ref={forwardedRef}
         onPress={composeEventHandlers(props.onPress as any, context.toggleSidebar)}
+        {...(triggerProps as any)}
       >
         {typeof children === 'function' ? children({ open: context.open }) : children}
       </SidebarTriggerFrame>
@@ -255,7 +245,7 @@ const SidebarFooter = SidebarFooterFrame.styleable<SidebarFooterProps>((props, f
   const { children, ...footerProps } = props
 
   return (
-    <SidebarFooterFrame className="sidebar-footer" {...footerProps} ref={forwardedRef}>
+    <SidebarFooterFrame className="sidebar-footer" ref={forwardedRef} {...footerProps}>
       {children}
     </SidebarFooterFrame>
   )
@@ -286,9 +276,9 @@ const SidebarContent = SidebarContentFrame.styleable<ScopedProps<SidebarContentP
 
     return (
       <SidebarContentFrame
-        {...contentProps}
         ref={forwardedRef}
         className="sidebar-content sidebar-content-overflow-hidden"
+        {...contentProps}
       >
         {children}
       </SidebarContentFrame>
@@ -363,8 +353,8 @@ const SidebarGroup = SidebarGroupFrame.styleable((props, forwardedRef) => {
     <SidebarGroupFrame
       data-sidebar="group"
       className={'sidebar-group'}
-      {...contentProps}
       ref={forwardedRef}
+      {...contentProps}
     >
       {children}
     </SidebarGroupFrame>
@@ -383,13 +373,13 @@ const SidebarGroupLabelFrame = styled(SizableText, {
 })
 
 const SidebarGroupLabel = SidebarGroupLabelFrame.styleable((props, forwardedRef) => {
-  const { children } = props
+  const { children, ...restProps } = props
   return (
     <SidebarGroupLabelFrame
       ref={forwardedRef}
       data-sidebar="group-label"
       className="sidebar-group-label group-data-[collapsible=icon]:opacity-0"
-      {...props}
+      {...restProps}
     >
       {children}
     </SidebarGroupLabelFrame>
@@ -453,12 +443,7 @@ const SidebarMenuFrame = styled(YStack, {
 })
 
 const SidebarMenu = SidebarMenuFrame.styleable((props, forwardedRef) => (
-  <SidebarMenuFrame
-    ref={forwardedRef}
-    data-sidebar="menu"
-    // style={{ listStyle: 'none' }}
-    {...props}
-  />
+  <SidebarMenuFrame ref={forwardedRef} data-sidebar="menu" {...props} />
 ))
 SidebarMenu.displayName = 'SidebarMenu'
 
@@ -480,8 +465,8 @@ const SidebarMenuAction = SidebarMenuActionFrame.styleable((props, forwardedRef)
   <SidebarMenuActionFrame
     ref={forwardedRef}
     data-sidebar="sidebar-menu-action"
-    {...props}
     className="group-data-[collapsible=icon]:opacity-0"
+    {...props}
   />
 ))
 

@@ -149,10 +149,16 @@ const DemoSidebar = () => {
           padding="$2"
           justifyContent="space-between"
         >
-          <XStack></XStack>
-
           <XStack gap={'$4'}>
-            <Sidebar collapsible={collapsibleVal} borderColor={'aliceblue'} borderStyle="solid">
+            <Sidebar
+              collapsible={collapsibleVal}
+              borderColor={'aliceblue'}
+              borderStyle="solid"
+              //@ts-ignore
+              maxHeight={'70svh'}
+              //@ts-ignore
+              minHeight={'70svh'}
+            >
               <Sidebar.Header>
                 <SidebarMenu>
                   <SidebarMenuItem>
